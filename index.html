@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Nossa História ❤️</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&family=Dancing+Script:wght@500;700&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- CANVAS bokeh fundo -->
+  <canvas id="bgCanvas"></canvas>
+
+  <!-- ═══ TELA DE BLOQUEIO ═══ -->
+  <div id="lockScreen">
+    <div class="lock-bg">
+      <div id="lockHearts"></div>
+    </div>
+
+    <!-- PASSO 1: cadeado coração -->
+    <div class="lock-step" id="lockStep1">
+      <div class="heart-lock-btn" id="heartLockBtn">
+        <img src="lock.png" alt="Cadeado coração" class="heart-lock-img" />
+      </div>
+      <p class="lock-tap-text">Clique para abrir meu coração</p>
+    </div>
+
+    <!-- PASSO 2: teclado numérico -->
+    <div class="lock-step hidden" id="lockStep2">
+      <div class="numpad-card">
+        <div class="numpad-header">
+          <span class="numpad-heart-icon">❤</span>
+          <h2 class="numpad-title">♥ Fecha Especial ♥</h2>
+          <span class="numpad-heart-icon">❤</span>
+        </div>
+
+        <div class="numpad-display" id="numpadDisplay">DD / MM / AAAA</div>
+        <div class="lock-error" id="lockError">Data incorreta. Tente novamente.</div>
+
+        <div class="numpad-grid">
+          <button class="numpad-key" data-val="1">1</button>
+          <button class="numpad-key" data-val="2">2</button>
+          <button class="numpad-key" data-val="3">3</button>
+          <button class="numpad-key" data-val="4">4</button>
+          <button class="numpad-key" data-val="5">5</button>
+          <button class="numpad-key" data-val="6">6</button>
+          <button class="numpad-key" data-val="7">7</button>
+          <button class="numpad-key" data-val="8">8</button>
+          <button class="numpad-key" data-val="9">9</button>
+          <button class="numpad-key numpad-clear" id="numpadClear">Borrar</button>
+          <button class="numpad-key" data-val="0">0</button>
+          <button class="numpad-key numpad-confirm" id="numpadConfirm">
+            <svg viewBox="0 0 24 22" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 20C12 20 2 13 2 7C2 4 4 2 7 2C9 2 11 3 12 5C13 3 15 2 17 2C20 2 22 4 22 7C22 13 12 20 12 20Z" fill="white"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXPLOSÃO DE CORAÇÕES -->
+  <div id="heartExplosion"></div>
+
+  <!-- ═══ TELA PRINCIPAL ═══ -->
+  <main id="mainScreen" class="hidden">
+
+    <!-- PLAYER -->
+    <section class="section-player" id="sectionPlayer">
+      <div class="glass-card player-card">
+        <p class="player-dedication">🎵 Dedico esta música para você ❤️</p>
+        <div class="audio-visualizer" id="visualizer">
+          <span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span>
+        </div>
+        <audio id="audioPlayer" src="music.mp3" preload="auto"></audio>
+        <div class="custom-player">
+          <button class="play-pause-btn" id="playPauseBtn">
+            <svg id="iconPlay" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+            <svg id="iconPause" viewBox="0 0 24 24" class="hidden"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+          </button>
+          <div class="player-progress-wrapper">
+            <div class="player-progress-bar" id="progressBar">
+              <div class="player-progress-fill" id="progressFill"></div>
+              <div class="player-progress-thumb" id="progressThumb"></div>
+            </div>
+            <div class="player-times">
+              <span id="currentTime">0:00</span>
+              <span id="totalTime">0:00</span>
+            </div>
+          </div>
+          <button class="volume-btn" id="volumeBtn">🔊</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CARD ROMÂNTICO CLARO: texto + buquê -->
+    <section class="section-love-card" id="sectionBouquet">
+      <div class="love-card" id="loveCard">
+        <div id="loveCardHearts"></div>
+
+        <div class="love-card-text" id="sectionText">
+          <img src="te-amo.png" alt="Te amo" class="te-amo-img" />
+          <img src="heart.png" alt="Coração" class="heart-img" />
+        </div>
+
+        <div class="bouquet-wrapper" id="bouquetWrapper">
+          <img src="bouquet.png" alt="Buquê" class="bouquet-img" id="bouquetImg" />
+          <div class="bouquet-glow"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTADOR -->
+    <section class="section-counter" id="sectionCounter">
+      <p class="counter-label">❤️ Juntos há ❤️</p>
+      <div class="counter-grid">
+        <div class="counter-item"><span class="counter-value" id="cYears">0</span><span class="counter-unit">anos</span></div>
+        <div class="counter-item"><span class="counter-value" id="cMonths">0</span><span class="counter-unit">meses</span></div>
+        <div class="counter-item"><span class="counter-value" id="cDays">0</span><span class="counter-unit">dias</span></div>
+        <div class="counter-item"><span class="counter-value" id="cHours">00</span><span class="counter-unit">horas</span></div>
+        <div class="counter-item"><span class="counter-value" id="cMinutes">00</span><span class="counter-unit">minutos</span></div>
+        <div class="counter-item"><span class="counter-value" id="cSeconds">00</span><span class="counter-unit">segundos</span></div>
+      </div>
+    </section>
+
+    <!-- CARTA DE AMOR -->
+    <section class="section-letter" id="sectionLetter">
+      <button class="letter-btn" id="letterBtn">💌 Abrir Carta</button>
+      <div class="letter-card" id="letterCard">
+        <div class="letter-header">
+          <span class="letter-seal">💌</span>
+          <h3 class="letter-title">Para você</h3>
+        </div>
+        <div class="letter-body">
+          <p>Eu te amo.</p>
+          <p>Obrigado por iluminar meus dias.</p>
+          <p>Você é a melhor parte da minha vida.</p>
+          <p class="letter-signature">❤️</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
